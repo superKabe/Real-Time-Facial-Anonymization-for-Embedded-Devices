@@ -1,2 +1,5 @@
 # 3rd-Year-Project
 Joint repository for contributions by Kaden Suderman and Mark Slattery for the development of the GDPR Facial Anonymization Project
+
+# Scope Statement
+This project is for the development of a facial anonymizer for use in doorbell, security, or any other camera system to assure General Data Protection Regulation (GDPR) compliance. This project, at the minimum, will be a standalone embedded computer vision platform, implemented on a Raspberry Pi 4b equipped with a camera module, which detects faces appearing in a video stream and obfuscates them using Gaussian blur to remove any recognizability. The footage will be processed by a trained computer vision algorithm built using OpenCV and Python, displayed to the user via a monitor, then stored for future reference. There will be complementing modes such as a “zone” system where facial detection can be enabled/disabled, and if achievable the ability to recognize certain faces using a photo reference system and specifically decide whether to blur them. Finally, to maintain GDPR compliance, audio will not be enabled on the video stream.
