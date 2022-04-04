@@ -24,6 +24,7 @@ Do_recognition = True
 cooldown = 0
 prev_face_location = []
 prev_face_names = []
+colour = (255, 255, 255) #BGR 0-255
 
 while True:
 	# Grab a single frame of video
@@ -71,21 +72,18 @@ while True:
 			else:
 				cooldown=0
 				# print("Resting cooldown")
-
-		
-			
 	
 		process_this_frame = not process_this_frame
 		# process_this_frame = True
-			
-		# print(name)
 		
+
 		# Display the results
 		for (top, right, bottom, left), name in zip(face_locations, face_names):
 			
 			# Will just bypass the Recontion
 			if Do_recognition == False:
 				name = "Unknown"
+				
 				
 			# Creating a buffer
 			prev_face_location = face_locations
@@ -99,19 +97,38 @@ while True:
 
 			# print(name)
 
+			colour = (0, 255, 0)
+
 			# Blurring the face if is labled as unknown
 			if (name == "Unknown"):
+				colour = (0, 0, 255)
 				for i in range(4):
 					frame[top:bottom, left:right] = cv2.GaussianBlur(frame[top:bottom, left:right], (99, 99), 30)
 
 			# Draw a box around the face
-			cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 1)
+			cv2.rectangle(frame, (left, top), (right, bottom), colour, 1)
 
 			# Draw a label with a name below the face
-			cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
+			cv2.rectangle(frame, (left, bottom - 35), (right, bottom), colour, cv2.FILLED)
 			font = cv2.FONT_HERSHEY_DUPLEX
 			cv2.putText(frame, name, (left + 6, bottom - 6), font, 0.5, (255, 255, 255), 1)
 		
+		
+		cv2.putText(frame, 'Enabled', (129, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1, cv2.LINE_AA)
+
+		if Do_recognition:
+			
+			cv2.putText(frame, 'Enabled', (154, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1, cv2.LINE_AA)
+			
+		else:
+			cv2.putText(frame, 'Disabled', (154, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
+	
+	else:
+		cv2.putText(frame, 'Disabled', (129, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
+		cv2.putText(frame, 'Disabled', (154, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
+
+	cv2.putText(frame, 'Face Tracking:', (7, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
+	cv2.putText(frame, 'Face Recognition:', (7, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
 
 	# Display the resulting image
 	cv2.imshow('Live feed', frame)
@@ -121,11 +138,11 @@ while True:
 		break
 
 	if cv2.waitKey(1) & 0xFF == ord('w'):
-		Do_track = False
+		Do_track = True
 		print("Tracking: " + str(Do_track))
 	
 	if cv2.waitKey(1) & 0xFF == ord('e'):
-		Do_track = True
+		Do_track = False
 		print("Tracking: " + str(Do_track))
 
 	if cv2.waitKey(1) & 0xFF == ord('t'):
