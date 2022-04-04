@@ -1,5 +1,5 @@
-import warnings
-warnings.filterwarnings('ignore', message='GStreamer')
+# import warnings
+# warnings.filterwarnings('ignore', message='GStreamer')
 
 import face_recognition
 import cv2
