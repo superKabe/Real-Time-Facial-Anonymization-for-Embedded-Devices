@@ -28,7 +28,7 @@ while True:
         break
     elif k%256 == 32:
         # SPACE pressed
-        img_name = "Project/testing/3/images/{}.png".format(fullName)
+        img_name = "images/{}.png".format(fullName)
         cv2.imwrite(img_name, frame)
         break
 
